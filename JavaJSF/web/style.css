@@ -1,0 +1,170 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2016-01-04, 18:10:36
+    Author     : Marcin
+*/
+
+html {
+    background: #CCBA96 url("https://forum.plemiona.pl/tribalwars/tw_back.jpg") no-repeat fixed 50% 0px;
+    
+}
+body {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: smaller;
+    padding: 20px;
+    color: #555;
+}
+h1 {
+    text-align: center;
+    letter-spacing: 6px;
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 5em;
+    color: #ffffff;
+    font-weight: normal;
+    width: max-content;
+    alignment-baseline: central;  
+}
+a.headlink:visited {
+   color:inherit;
+}
+h2 {
+    text-align: center;
+    letter-spacing: 6px;
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 2em;
+    color: #ffffff;
+    font-weight: normal;
+    width: max-content;
+    alignment-baseline: central; 
+}
+table {
+    width: 100%;
+    background: #c8ab7f;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+th{
+    background-color: #f5eabe;
+}
+
+a:link {
+    color: #ffffff;
+    font-weight: normal;
+    text-decoration: none;
+}
+a:link:hover {
+    color: #be7429;
+    font-weight: normal;
+    text-decoration: underline;
+}
+a:visited {
+　　text-decoration: none;
+}
+.time {
+     position: fixed;
+    bottom: 0;
+    right: 0;
+    float:right;
+    background-color:#c8ab7f;
+}
+small{
+    color: coral
+}
+p
+{
+    color: #ffffff
+}
+div.form {
+    margin: auto;
+    width: 100%;
+}
+div.table{
+    width: 100%;
+    background: #c8ab7f;
+    border-collapse: collapse;
+}
+
+div.loginregister {
+    float: right;
+}
+p.time {
+    float: right;
+}
+p.visitations {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    text-align: center;
+    background-color:#c8ab7f;
+}
+p.copyrights {
+     position: fixed;
+    float: left;
+    bottom: 0;
+    left: 0;
+    background-color:#c8ab7f;
+}
+div.headerWidget{
+    float:left;
+}
+div.adminnote{
+    font-size:30px;
+    background-color:activecaption;
+    text-align:center;
+    width:40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+div.foot{
+    background-color:#555;
+}
+.bubble {
+    font-weight: bold;
+    background-color: #f5eabe;
+    padding: 5px;
+    color: inherit;
+    display: inline;
+    border-radius: 4px;
+}
+
+.eng{
+    background-image: url(http://static.hltv.org//images/flag/gb.gif);
+}
+
+.note{
+    margin: auto;
+     width: 80%;
+}
+textarea {
+     font-size:18pt;
+     text-align: left;
+     height: 400px;
+     width: 80%;
+   resize: none;
+}
+tr.mouseover:hover{
+    background-color: brown;
+}
+pre
+{
+    white-space: pre-wrap; /* CSS3 */
+    white-space: -moz-pre-wrap; /* Mozilla, post millennium */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+p.registered{
+    bottom: 0;
+    left: 70%;
+    text-align: center;
+    background-color:#c8ab7f;
+}
