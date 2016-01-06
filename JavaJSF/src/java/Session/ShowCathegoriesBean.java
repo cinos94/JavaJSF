@@ -87,6 +87,10 @@ public class ShowCathegoriesBean {
     public String getNote() {
         return note;
     }
+    public String showtopics(int id)
+    {
+        return "cathegory";
+    }
     
 
 }

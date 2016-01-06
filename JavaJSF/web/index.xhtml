@@ -6,6 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <h:head>
+        <title>asdasd</title>
         <h:outputStylesheet library="css" name="style.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <div id="menu">
@@ -28,11 +29,10 @@
         </thead>
 <!-- column data -->
 <ui:repeat var="row" value="#{ShowCathegoriesBean.list}">
-    <tr class="mouseover" onclick="document.location = 'cathegory.xhtml'" >
+    <tr class="mouseover" onclick="#{showCathegoriesBean.showtopics(row.idCathegory)}">
     
-        <td><h:outputText value="#{row.idCathegory}"></h:outputText></td>
+        <h:form><td><h:commandLink action="#{ShowCathegoriesBean.showtopics(row.idCathegory)}" value="#{row.idCathegory}"></h:commandLink></td></h:form>
         <td><h:outputText value="#{row.Content}"></h:outputText></td>
-        <td> <input  action = "ShowTopics" type="submit" name="submit"  value="Save"></input></td>
     </tr>
 </ui:repeat>
     
