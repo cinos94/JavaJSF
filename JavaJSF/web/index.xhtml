@@ -1,12 +1,47 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+       xmlns:c="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <h:head>
-        <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <div id="menu">
+            <ui:insert name="menu" >
+              <ui:include src="/menus/basicheader.xhtml" />
+            </ui:insert>
+    </div>
     </h:head>
     <h:body>
-        Hello from Facelets
+      <div class="adminnote">
+          <h:outputText value="#{ShowCathegoriesBean.note}"> </h:outputText> 
+         </div>
+        <table>
+    <!-- column headers -->
+        <thead>
+                <tr>
+                        <th><h:outputText value="#{msg['idCathegory']}"/></th>
+                        <th><h:outputText value="#{msg['catname']}"/></th>
+                </tr>
+        </thead>
+<!-- column data -->
+<ui:repeat var="row" value="#{ShowCathegoriesBean.list}">
+    <tr class="mouseover" onclick="document.location = 'cathegory.xhtml'" >
+    
+        <td><h:outputText value="#{row.idCathegory}"></h:outputText></td>
+        <td><h:outputText value="#{row.Content}"></h:outputText></td>
+        <td> <input  action = "ShowTopics" type="submit" name="submit"  value="Save"></input></td>
+    </tr>
+</ui:repeat>
+    
+</table>
+        <div id="menu">
+            <ui:insert name="menu" >
+              <ui:include src="/menus/footer.xhtml" />
+            </ui:insert>
+    </div>
     </h:body>
 </html>
 
