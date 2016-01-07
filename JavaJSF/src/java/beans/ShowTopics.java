@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.SessionBean;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -50,24 +51,24 @@ public class ShowTopics {
     /**
      * Creates a new instance of ShowTopics
      */
-    @ManagedProperty(value="#{ShowCathegoriesBean}")
-    private ShowCathegoriesBean ShowCathegoriesBean;
 
-    public ShowCathegoriesBean getShowCathegoriesBean() {
-        return ShowCathegoriesBean;
-    }
 
-    public void setShowCathegoriesBean(ShowCathegoriesBean ShowCathegoriesBean) {
-        this.ShowCathegoriesBean = ShowCathegoriesBean;
-    }
+
+    
     public ShowTopics() {
         
     }
-    @PostConstruct
-    public void LoadTopics()
+    
+    public String LoadTopics(int id)
     {
         try 
         {   
+            /*FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+        if(session.getAttribute("login")==null)
+        {
+            return "login";
+        }*/
             FacesContext facesContext = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
             
@@ -78,7 +79,7 @@ public class ShowTopics {
             {
                 statement = connect.createStatement();
                 Integer sub;
-                sub=ShowCathegoriesBean.getId();
+                sub=id;
                 resultSet = statement.executeQuery("select * from topics t, users u where idCathegory='"+ sub +"' AND u.idUsers = t.idUsers");
                 
                 while(resultSet.next())
@@ -100,6 +101,8 @@ public class ShowTopics {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ShowTopics.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+            return "cathegory";
     }
     public String showposts(int id)
     {

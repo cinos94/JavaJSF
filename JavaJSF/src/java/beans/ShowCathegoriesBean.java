@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpSession;
  * @author Marcin
  */
 @ManagedBean(name="ShowCathegoriesBean")
-@RequestScoped
+@ApplicationScoped
 public class ShowCathegoriesBean {
 
     private Connection connect = null;
@@ -79,6 +80,16 @@ public class ShowCathegoriesBean {
     public String note;
     public ArrayList list = new ArrayList();
     public Integer id;
+    public ArrayList topics = new ArrayList();
+
+    public void setTopics(ArrayList topics) {
+        this.topics = topics;
+    }
+
+    public ArrayList getTopics() {
+        return topics;
+    }
+    
 
     public void setId(Integer id) {
         this.id = id;
@@ -103,17 +114,46 @@ public class ShowCathegoriesBean {
     public String getNote() {
         return note;
     }
-    public String showtopics(int id)
+   /* public String showtopics(int id)
     {
-        /*FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        if(session.getAttribute("login")==null)
+        
+        try 
+        {   
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+            
+            
+            Class.forName("com.mysql.jdbc.Driver");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/baza","root", "");
+            if(connect != null)
+            {
+                statement = connect.createStatement();
+                Integer sub;
+                sub=id;
+                resultSet = statement.executeQuery("select * from topics t, users u where idCathegory='"+ sub +"' AND u.idUsers = t.idUsers");
+                
+                while(resultSet.next())
+            {
+                Map m = new HashMap();
+                m.put("idTopic",resultSet.getString("idTopic"));
+                m.put("topic",resultSet.getString("topic"));
+                m.put("idCathegory",resultSet.getString("idCathegory"));
+                m.put("idUsers",resultSet.getString("idUsers"));
+                m.put("Nickname",resultSet.getString("Nickname"));
+                topics.add(m);
+            }         
+            }
+    }
+        
+        catch (SQLException ex)
         {
-            return "login";
-        }*/
+            Logger.getLogger(ShowTopics.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ShowTopics.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.id=id;
         return "cathegory";
-    }
+    }*/
     
 
 }

@@ -31,8 +31,10 @@
 <ui:repeat var="row" value="#{ShowCathegoriesBean.list}">
     <tr class="mouseover" onclick="#{showCathegoriesBean.showtopics(row.idCathegory)}">
     
-        <h:form><td><h:commandLink action="#{ShowCathegoriesBean.showtopics(row.idCathegory)}" value="#{row.idCathegory}"></h:commandLink></td></h:form>
-        <h:form><td><h:commandLink action="#{ShowCathegoriesBean.showtopics(row.idCathegory)}" value="#{row.Content}"></h:commandLink></td></h:form>
+        <h:form><td><h:commandLink action="#{showTopics.LoadTopics(row.idCathegory)}" value="#{row.idCathegory}">
+                <c:param name="id" value="#{row.idCathegory}" /></h:commandLink></td></h:form>
+        <h:form><td><h:commandLink action="#{showTopics.LoadTopics(row.idCathegory)}" value="#{row.Content}">
+                <c:param name="id" value="#{row.idCathegory}" /></h:commandLink></td></h:form>
     </tr>
 </ui:repeat>
     
