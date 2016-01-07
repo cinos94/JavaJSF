@@ -7,12 +7,12 @@
     version="2.0">
 	<managed-bean>
 		<managed-bean-name>ShowCathegoriesBean</managed-bean-name>
-		<managed-bean-class>Session.ShowCathegoriesBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
+		<managed-bean-class>beans.ShowCathegoriesBean</managed-bean-class>
+	
+		<managed-bean-scope>request</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>showTopics</managed-bean-name>
-        <managed-bean-class>User.ShowTopics</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>beans.ShowTopics</managed-bean-class>
+    
+        <managed-bean-scope>request</managed-bean-scope></managed-bean>
 </faces-config>

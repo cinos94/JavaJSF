@@ -1,4 +1,4 @@
-package Session;
+package beans;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
@@ -34,6 +35,13 @@ public class ShowCathegoriesBean {
      * Creates a new instance of ShowCathegories
      */
     public ShowCathegoriesBean() {
+         
+        
+    }
+    @PostConstruct
+    public void Loadlist()
+    {
+        list.clear();
         note = null;
         try 
         {
@@ -66,11 +74,19 @@ public class ShowCathegoriesBean {
             Logger.getLogger(ShowCathegoriesBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ShowCathegoriesBean.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
+        }
     }
     public String note;
     public ArrayList list = new ArrayList();
+    public Integer id;
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
 
     public void setList(ArrayList list) {
         this.list = list;
@@ -89,6 +105,13 @@ public class ShowCathegoriesBean {
     }
     public String showtopics(int id)
     {
+        /*FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+        if(session.getAttribute("login")==null)
+        {
+            return "login";
+        }*/
+        this.id=id;
         return "cathegory";
     }
     

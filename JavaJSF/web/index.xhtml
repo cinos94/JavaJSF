@@ -11,7 +11,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <div id="menu">
             <ui:insert name="menu" >
-              <ui:include src="/menus/basicheader.xhtml" />
+              <ui:include src="/menus/header.xhtml" />
             </ui:insert>
     </div>
     </h:head>
@@ -32,7 +32,7 @@
     <tr class="mouseover" onclick="#{showCathegoriesBean.showtopics(row.idCathegory)}">
     
         <h:form><td><h:commandLink action="#{ShowCathegoriesBean.showtopics(row.idCathegory)}" value="#{row.idCathegory}"></h:commandLink></td></h:form>
-        <td><h:outputText value="#{row.Content}"></h:outputText></td>
+        <h:form><td><h:commandLink action="#{ShowCathegoriesBean.showtopics(row.idCathegory)}" value="#{row.Content}"></h:commandLink></td></h:form>
     </tr>
 </ui:repeat>
     
