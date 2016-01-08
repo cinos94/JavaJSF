@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -18,6 +19,9 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -25,12 +29,13 @@ import javax.servlet.http.HttpSession;
  * @author Marcin
  */
 @ManagedBean(name="ShowCathegoriesBean")
-@ApplicationScoped
+@RequestScoped
 public class ShowCathegoriesBean {
 
     private Connection connect = null;
     private Statement statement = null;
     private ResultSet resultSet = null;
+    private ResultSet resultSet1 = null;
     private PreparedStatement preparedStatement = null;
     /**
      * Creates a new instance of ShowCathegories
@@ -69,6 +74,7 @@ public class ShowCathegoriesBean {
                 list.add(m);
                 }
             }
+            Stats();
     }
         catch (SQLException ex)
         {
@@ -76,6 +82,81 @@ public class ShowCathegoriesBean {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ShowCathegoriesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public void Stats()
+    {
+        try 
+        {
+            
+            Class.forName("com.mysql.jdbc.Driver");  
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/baza","root", "");
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+            HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();   
+            Cookie[] cookies = null;
+            cookies = request.getCookies();
+            date= new Date();
+            if( cookies == null )
+            {
+                preparedStatement = connect.prepareStatement("update stats set visited = visited + 1");
+                preparedStatement.executeUpdate();
+                Cookie cookie = new Cookie("visited","visited");
+                cookie.setMaxAge(60*24);
+                response.addCookie(cookie);
+                
+                preparedStatement = connect.prepareStatement("select * from stats");   
+                resultSet1 = preparedStatement.executeQuery();
+                resultSet1.next();
+                num = resultSet1.getInt("visited");
+                preparedStatement=connect.prepareStatement("Select count(idUsers) a from users");
+                resultSet1 =preparedStatement.executeQuery();
+                resultSet1.next();
+                am=resultSet1.getInt("a");
+            }
+            else
+            {
+                preparedStatement = connect.prepareStatement("select * from stats");   
+                resultSet1 = preparedStatement.executeQuery();
+                resultSet1.next();
+                num = resultSet1.getInt("visited");
+                preparedStatement=connect.prepareStatement("Select count(idUsers) a from users");
+                resultSet1 =preparedStatement.executeQuery();
+                resultSet1.next();
+                am=resultSet1.getInt("a");
+            }
+            
+            connect.close();
+        }
+        catch (ClassNotFoundException | SQLException ex) 
+        {
+            Logger.getLogger(ShowCathegoriesBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public Integer num;
+    public Date date;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+    public Integer am;
+
+    public Integer getAm() {
+        return am;
+    }
+
+    public void setAm(Integer am) {
+        this.am = am;
     }
     public String note;
     public ArrayList list = new ArrayList();

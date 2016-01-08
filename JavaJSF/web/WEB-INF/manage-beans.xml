@@ -15,4 +15,9 @@
         <managed-bean-class>beans.ShowTopics</managed-bean-class>
     
         <managed-bean-scope>request</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>showPosts</managed-bean-name>
+        <managed-bean-class>beans.ShowPosts</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

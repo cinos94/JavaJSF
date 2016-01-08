@@ -26,12 +26,15 @@
         </thead>
 <!-- column data -->
 <ui:repeat var="row" value="#{showTopics.topics}">
-    <tr class="mouseover" onclick="#{showTopics.showposts(row.idTopic)}">
+    <tr class="mouseover" onclick="#{showPosts.LoadPosts(row.idTopic)}">
     
-        <h:form><td><h:commandLink action="#{showTopics.showposts(row.idTopic)}" value="#{row.topic}"></h:commandLink></td></h:form>
-        <h:form><td><h:commandLink action="#{showTopics.showposts(row.idTopic)}" value="#{row.Nickname}"></h:commandLink></td></h:form>
+        <h:form><td><h:commandLink action="#{showPosts.LoadPosts(row.idTopic)}" value="#{row.topic}">
+                <c:param name="id" value="#{row.idTopic}" /></h:commandLink></td></h:form>
+        <h:form><td><h:commandLink action="#{showPosts.LoadPosts(row.idTopic)}" value="#{row.Nickname}">
+                <c:param name="id" value="#{row.idTopic}" /></h:commandLink></td></h:form>
     </tr>
 </ui:repeat>
+
     
 </table>
         <div id="menu">

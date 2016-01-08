@@ -20,5 +20,12 @@
        <from-outcome>cathegory</from-outcome>
 		<to-view-id>cathegory.xhtml</to-view-id>
    </navigation-case>
+   
     </navigation-rule>	
+    <navigation-rule>
+    <navigation-case>
+       <from-outcome>topic</from-outcome>
+		<to-view-id>topic.xhtml</to-view-id>
+   </navigation-case>
+    </navigation-rule>
 </faces-config>
