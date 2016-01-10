@@ -3,10 +3,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <title><h:message for="#{msg['title']}"></h:message></title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <div class="loginregister"><h:form>
+                    <h:commandLink  action="sendmessage"  target="" value="#{msg['sendmessage']}"/><small>/</small>
+                   <h:commandLink  action="messages"  target="" value="#{msg['messages']}"/><small>/</small>
+                   <h:commandLink  action="profile"  target="" value="#{msg['userpanel']}"/><small>/</small>
+                   <h:commandLink  action="#{login.invalidate}"  target="" value="#{msg['logout']}"/>
+                   </h:form></div>
+         <h1><a class="headlink" href="index.xhtml"><h:outputText value="#{msg['h1']}"/></a></h1>
     </h:body>
 </html>
 

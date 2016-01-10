@@ -1,12 +1,77 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <h:head>
-        <title>Facelet Title</title>
+        
+        <h:outputStylesheet library="css" name="style.css"/>
+        <title>Login</title>
+        <ui:insert name="menu" >
+              <ui:include src="/menus/header.xhtml" />
+            </ui:insert>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <div class="form">
+       <h:form onsubmit="return validate();">
+            <table border ='0'>
+                <tr>
+                    <td>Login:</td>
+                    <td><h:inputText id="Login" value="#{login.user}"></h:inputText></td>
+                    <td><h:message for="valLogin"></h:message></td>
+                </tr>
+                <tr>
+                    <td><h:outputText value="#{msg['password']}"/></td>
+                    <td><h:inputSecret id="Password" value="#{login.password}"></h:inputSecret></td>
+                    <td><h:message for="valPassword"></h:message></td>
+                </tr>
+                <tr>
+                    <td  colspan='1'></td>
+                    <td align='right'><h:commandButton action="#{login.Validate}" value="Login"></h:commandButton></td>
+                </tr>
+                <tr>
+                    <td> <p><h:outputText value="#{login.error}"/></p></td>
+                </tr>
+            </table>
+       </h:form>
+        </div>
+        <script>
+                function validate()
+                {
+                    count = 0;
+                    
+                if(document.loginf.Login.value === "" || document.loginf.Login.value === null)
+                {   
+                   document.getElementById("valLogin").innerHTML = "Field required.";
+                   count++;
+                }
+                else
+                {
+                    document.getElementById("valLogin").innerHTML = "";
+                }
+                //Password
+                if(document.loginf.Password.value === "" || document.loginf.Password.value === null)
+                {   
+                   document.getElementById("valPassword").innerHTML = "Field required.";
+                   count++;
+                }
+                else
+                {
+                    document.getElementById("valPassword").innerHTML = "";
+                }
+                
+                
+                if(count>0) return false;
+                else
+                return true;
+                }
+            </script>
+        <div id="menu">
+            <ui:insert name="menu" >
+              <ui:include src="/menus/footer.xhtml" />
+            </ui:insert>
+    </div>
     </h:body>
 </html>
 
