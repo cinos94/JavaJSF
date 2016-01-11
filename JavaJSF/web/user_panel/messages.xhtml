@@ -1,12 +1,46 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+       xmlns:c="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <h:head>
-        <title>Facelet Title</title>
+        <title>asdasd</title>
+        <h:outputStylesheet library="css" name="style.css"/>
+        
+            <ui:insert name="menu" >
+              <ui:include src="/menus/header.xhtml" />
+            </ui:insert>
+    
     </h:head>
     <h:body>
-        Hello from Facelets
+      <table>
+    <!-- column headers -->
+    <tr>
+        <thead>
+            <tr> 
+            <th><h:outputText value="#{msg['sender']}"> </h:outputText> </th>
+            <th><h:outputText value="#{msg['receiver']}"> </h:outputText></th>
+            <th><h:outputText value="#{msg['message']}"> </h:outputText></th>
+            </tr>
+        </thead>
+</tr>
+<!-- column data -->
+<ui:repeat value="#{messages.messages}" var="current">
+                                <tr>
+                                    <td> <h:outputText value="#{current.idSender}"> </h:outputText></td>
+                                    <td> <h:outputText value="#{current.idReceiver}"> </h:outputText></td>      
+                                    <td><h:outputText value="#{current.Message}"> </h:outputText></td>
+                                </tr>
+                            </ui:repeat>
+    
+</table>
+        <div id="menu">
+            <ui:insert name="menu" >
+              <ui:include src="/menus/footer.xhtml" />
+            </ui:insert>
+    </div>
     </h:body>
 </html>
 

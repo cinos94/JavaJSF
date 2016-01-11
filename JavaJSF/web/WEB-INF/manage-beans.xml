@@ -35,4 +35,9 @@
         <managed-bean-class>beans.Users</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>messages</managed-bean-name>
+        <managed-bean-class>beans.Messages</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>
