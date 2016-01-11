@@ -1,12 +1,77 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <h:head>
-        <title>Facelet Title</title>
+        
+        <h:outputStylesheet library="css" name="style.css"/>
+        <title>Send Message</title>
+        <ui:insert name="menu" >
+              <ui:include src="/menus/header.xhtml" />
+            </ui:insert>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h2>Prywatna wiadomość</h2>
+        <div class="form">
+       <h:form id='loginf'  onsubmit="return(validate());">
+            <table border ='0'>
+                <tr>
+                    <td><h:outputText value="#{msg['nickname']}"/></td>
+                    <td><h:inputText id="Login" value="#{messages.user}"></h:inputText></td>
+                    <td><h:message for="valLogin"></h:message></td>
+                </tr>
+                <tr>
+                    <td><h:outputText value="#{msg['message']}"/></td>
+                    <td><h:inputText id="Password" value="#{messages.message}"></h:inputText></td>
+                    <td><h:message for="valPassword"></h:message></td>
+                </tr>
+                <tr>
+                    <td  colspan='1'></td>
+                    <td align='right'><h:commandButton action="#{messages.Send}" value="Send"></h:commandButton></td>
+                </tr>
+                <tr>
+                    <td> <p><h:outputText value="#{messages.error}"/></p></td>
+                </tr>
+            </table>
+       </h:form>
+        </div>
+        <script>
+        function validate()
+                {
+                    count = 0;
+                    
+                if(document.priv.Nickname.value === "" || document.priv.Nickname.value === null)
+                {   
+                   document.getElementById("valNickname").innerHTML = "Field required.";
+                   count++;
+                }
+                else
+                {
+                    document.getElementById("valNickname").innerHTML = "";
+                }
+                //Password
+                if(document.priv.Message.value === "" || document.priv.Message.value === null)
+                {   
+                   document.getElementById("valMessage").innerHTML = "Field required.";
+                   count++;
+                }
+                else
+                {
+                    document.getElementById("valMessage").innerHTML = "";
+                }
+                
+                
+                if(count>0) return false;
+                
+                return true;
+                }
+            </script>
+        <div id="menu">
+            <ui:insert name="menu" >
+              <ui:include src="/menus/footer.xhtml" />
+            </ui:insert>
+    </div>
     </h:body>
 </html>
-

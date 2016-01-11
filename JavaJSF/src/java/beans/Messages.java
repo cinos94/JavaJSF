@@ -39,6 +39,42 @@ public class Messages {
     private ResultSet resultSet = null;
     private PreparedStatement preparedStatement = null;
     public ArrayList messages = new ArrayList();
+    public String user;
+    public String message;
+    public String error;
+    public boolean status;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+    
 
     public ArrayList getMessages() {
         return messages;
@@ -85,5 +121,45 @@ public class Messages {
             Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "/user_panel/messages";
+    }
+    public String Send()
+    {
+        try 
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/baza","root", "");
+            if(connect != null)
+            {
+                statement = connect.createStatement();
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+                Integer id= (Integer)session.getAttribute("id");
+                
+                resultSet = statement.executeQuery("select idUsers from users where Nickname ='"+user+"'");
+                status = resultSet.next();
+                if(status)
+                {
+                    Integer idreceiver =resultSet.getInt("idUsers");
+                    preparedStatement = connect.prepareStatement("insert into  messages values (default, ?, ?, ?)");
+                    preparedStatement.setInt(1, id);
+                    preparedStatement.setInt(2, idreceiver);
+                    preparedStatement.setString(3, message);
+                    preparedStatement.executeUpdate();
+                    error="Message sent";     
+                }
+                else
+                {
+                   error="Nickname doesn't exist";
+                   return "sendmessage";
+                }
+            }
+    }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return"sendmessage";
     }
 }
