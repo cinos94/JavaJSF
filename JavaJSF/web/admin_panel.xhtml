@@ -1,12 +1,37 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Admin Panel</title>
+        <h:outputStylesheet library="css" name="style.css"/>
+        
+            <ui:insert name="menu" >
+              <ui:include src="/menus/header.xhtml" />
+            </ui:insert>
     </h:head>
     <h:body>
-        Hello from Facelets
+          <h2><h:outputText value="#{msg['Admin Panel']}"/></h2>
+          <table>
+    <tr>
+        <th><h:outputText value="#{msg['adminnote']}"/></th>
+        <th><h:form><h:commandLink  action="/admin_panel/Note"  target="" value="#{msg['go']}"/></h:form></th>
+    </tr>
+    <tr>
+        <th><h:outputText value="#{msg['listofusers']}"/></th>
+        <th><h:form><h:commandLink  action="/admin_panel/users"  target="" value="#{msg['go']}"/></h:form></th>
+    </tr> 
+    <tr>
+        <th><h:outputText value="#{msg['listofpriv']}"/></th>
+        <th><h:form><h:commandLink  action="/admin_panel/allmessages"  target="" value="#{msg['go']}"/></h:form></th>
+    </tr>
+</table>
+          <div id="menu">
+            <ui:insert name="menu" >
+              <ui:include src="/menus/footer.xhtml" />
+            </ui:insert>
+    </div>
     </h:body>
 </html>
 
