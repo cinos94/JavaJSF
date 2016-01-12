@@ -10,7 +10,7 @@
         <div class="loginregister"><h:form>
                     <h:commandLink  action="sendmessage"  target="" value="#{msg['sendmessage']}"/><small>/</small>
                     <h:commandLink  action="#{messages.LoadMessages}" target="" value="#{msg['messages']}"/><small>/</small>
-                   <h:commandLink  action="profile"  target="" value="#{msg['userpanel']}"/><small>/</small>
+                   <h:commandLink  action="#{users.User}"  target="" value="#{msg['userpanel']}"/><small>/</small>
                    <h:commandLink  action="#{login.invalidate}"  target="" value="#{msg['logout']}"/>
                    </h:form></div>
          <h1><a class="headlink" href="index.xhtml"><h:outputText value="#{msg['h1']}"/></a></h1>
