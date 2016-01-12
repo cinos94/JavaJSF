@@ -9,7 +9,7 @@
     <h:body>
         <div class="loginregister"><h:form>
                     <h:commandLink  action="sendmessage"  target="" value="#{msg['sendmessage']}"/><small>/</small>
-                   <h:commandLink  action="messages"  target="" value="#{msg['messages']}"/><small>/</small>
+                    <h:commandLink  action="#{messages.loadMessages}"  target="" value="#{msg['messages']}"/><small>/</small>
                    <h:commandLink  action="admin_panel"  target="" value="#{msg['Admin Panel']}"/><small>/</small>
                    <h:commandLink  action="#{login.invalidate}"  target="" value="#{msg['logout']}"/>
                    </h:form></div>

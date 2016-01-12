@@ -1,5 +1,6 @@
 package beans;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,6 +18,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.Cookie;
@@ -162,6 +164,16 @@ public class ShowCathegoriesBean {
     public ArrayList list = new ArrayList();
     public Integer id;
     public ArrayList topics = new ArrayList();
+    public String error;
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+    
 
     public void setTopics(ArrayList topics) {
         this.topics = topics;
@@ -236,5 +248,30 @@ public class ShowCathegoriesBean {
         return "cathegory";
     }*/
     
-
+public String SaveNote() throws IOException
+{
+    try 
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/baza","root", "");
+            if(connect != null)
+            {
+                statement = connect.createStatement();
+                preparedStatement = connect.prepareStatement("UPDATE adminnote SET note=?");
+                preparedStatement.setString(1, note);
+                preparedStatement.executeUpdate();
+            }
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.redirect("http://localhost:8080/JavaJSF/index.xhtml");
+            return "/JavaJSF/index";
+         }
+    
+        catch (SQLException ex)
+        {
+            Logger.getLogger(ShowCathegoriesBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ShowCathegoriesBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    return "/JavaJSF/index";
+}
 }
