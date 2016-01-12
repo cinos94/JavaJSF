@@ -261,9 +261,10 @@ public String SaveNote() throws IOException
                 preparedStatement.setString(1, note);
                 preparedStatement.executeUpdate();
             }
-            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-            ec.redirect("http://localhost:8080/JavaJSF/index.xhtml");
-            return "/JavaJSF/index";
+            return "index";
+            //ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            //ec.redirect("http://localhost:8080/JavaJSF/index.xhtml");
+           // return "/JavaJSF/index";
          }
     
         catch (SQLException ex)

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:c="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <h:head>
+        <title>Users</title>
+        <h:outputStylesheet library="css" name="style.css"/>
+        
+            <ui:insert name="menu" >
+              <ui:include src="/menus/header.xhtml" />
+            </ui:insert>
+    
+    </h:head>
+    <h:body>
+      <table>
+    <!-- column headers -->
+    <tr>
+        <thead>
+            <tr> 
+            <th><h:outputText value="#{msg['idUsers']}"> </h:outputText> </th>
+            <th><h:outputText value="#{msg['nickname']}"> </h:outputText></th>
+            <th><h:outputText value="#{msg['name']}"> </h:outputText></th>
+            <th><h:outputText value="#{msg['surname']}"> </h:outputText></th>
+            </tr>
+        </thead>
+</tr>
+<!-- column data -->
+<ui:repeat value="#{users.users}" var="current">
+                                <tr>
+                                    <td> <h:outputText value="#{current.idUser}"> </h:outputText></td>
+                                    <td> <h:outputText value="#{current.Nickname}"> </h:outputText></td>      
+                                    <td><h:outputText value="#{current.Name}"> </h:outputText></td>
+                                    <td><h:outputText value="#{current.Surname}"></h:outputText></td>
+                                </tr>
+                            </ui:repeat>
+
+ 
+</table>
+        <h:form><div class="note">
+              <h:inputText id="input" value="#{users.id}"></h:inputText>
+              <h:commandButton action="#{users.DeleteUser(users.id)}" value="Delete user"></h:commandButton>
+            </div></h:form>
+        <div id="menu">
+            <ui:insert name="menu" >
+              <ui:include src="/menus/footer.xhtml" />
+            </ui:insert>
+    </div>
+    </h:body>
+</html>

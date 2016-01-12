@@ -23,20 +23,17 @@
             <th><h:outputText value="#{msg['sender']}"> </h:outputText> </th>
             <th><h:outputText value="#{msg['receiver']}"> </h:outputText></th>
             <th><h:outputText value="#{msg['message']}"> </h:outputText></th>
-            <th><h:outputText value="#{msg['delete']}"> </h:outputText></th>
             </tr>
         </thead>
 </tr>
 <!-- column data -->
-<h:form><ui:repeat value="#{messages.messages}" var="current">
+<ui:repeat value="#{messages.messages}" var="current">
                                 <tr>
                                     <td> <h:outputText value="#{current.idSender}"> </h:outputText></td>
                                     <td> <h:outputText value="#{current.idReceiver}"> </h:outputText></td>      
                                     <td><h:outputText value="#{current.Message}"> </h:outputText></td>
-                                    <td>
-<h:form><h:commandLink action="#{messages.deleteNote(current.idMessage)}" value="klik"></h:commandLink></h:form></td>
                                 </tr>
-                            </ui:repeat></h:form>
+                            </ui:repeat>
     
 </table>
         <div id="menu">
@@ -46,3 +43,4 @@
     </div>
     </h:body>
 </html>
+

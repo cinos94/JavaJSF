@@ -28,17 +28,22 @@
         </thead>
 </tr>
 <!-- column data -->
-<h:form><ui:repeat value="#{messages.messages}" var="current">
+<ui:repeat value="#{messages.messages}" var="current">
                                 <tr>
                                     <td> <h:outputText value="#{current.idSender}"> </h:outputText></td>
                                     <td> <h:outputText value="#{current.idReceiver}"> </h:outputText></td>      
                                     <td><h:outputText value="#{current.Message}"> </h:outputText></td>
                                     <td>
-<h:form><h:commandLink action="#{messages.deleteNote(current.idMessage)}" value="klik"></h:commandLink></h:form></td>
+<h:form><h:commandLink action="#{messages.deleteNote('5')}" value="#{current.idMessage}"></h:commandLink></h:form></td>
                                 </tr>
-                            </ui:repeat></h:form>
-    
+                            </ui:repeat>
+
+ 
 </table>
+        <h:form><div class="note">
+              <h:inputText id="input" value="#{messages.id}"></h:inputText>
+              <h:commandButton action="#{messages.deleteNote(messages.id)}" value="Delete user"></h:commandButton>
+            </div></h:form>
         <div id="menu">
             <ui:insert name="menu" >
               <ui:include src="/menus/footer.xhtml" />

@@ -6,6 +6,7 @@
 
 package beans;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,8 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
@@ -28,7 +31,7 @@ import javax.servlet.http.HttpSession;
  * @author Marcin
  */
 @ManagedBean(name="Messages")
-@RequestScoped
+@ApplicationScoped
 public class Messages {
 
     /**
@@ -43,6 +46,16 @@ public class Messages {
     public String message;
     public String error;
     public boolean status;
+    public String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
 
     public boolean isStatus() {
         return status;
@@ -109,6 +122,7 @@ public class Messages {
                 m.put("Message",resultSet.getString("Message"));
                 messages.add(m);
             }
+                connect.close();
                       
                        
             }
@@ -120,7 +134,7 @@ public class Messages {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "/user_panel/messages";
+        return "messages";
     }
     public String Send()
     {
@@ -145,7 +159,8 @@ public class Messages {
                     preparedStatement.setInt(2, idreceiver);
                     preparedStatement.setString(3, message);
                     preparedStatement.executeUpdate();
-                    error="Message sent";     
+                    error="Message sent";  
+                    connect.close();
                 }
                 else
                 {
@@ -161,5 +176,79 @@ public class Messages {
             Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
         }
         return"sendmessage";
+    }
+    public String LoadAllMessages() throws IOException
+    {
+        try 
+        {
+            messages.clear();
+            Class.forName("com.mysql.jdbc.Driver");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/baza","root", "");
+             FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+            if(connect != null)
+            {
+                statement = connect.createStatement();
+                Integer id= (Integer)session.getAttribute("id");
+                
+                resultSet = statement.executeQuery("select u.Nickname a,us.Nickname b,m.Message, m.idMessage id from messages m,users u,users us where us.idUsers=m.idSender and u.idUsers=m.idReceiver");
+                
+                while(resultSet.next())
+            {
+                Map m = new HashMap();
+                m.put("idSender",resultSet.getString("b"));
+                m.put("idReceiver",resultSet.getString("a"));
+                m.put("Message",resultSet.getString("Message"));
+                m.put("idMessage",resultSet.getString("id"));
+                messages.add(m);
+            }
+                connect.close();
+                
+                //ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+           // ec.redirect("http://localhost:8080/JavaJSF/admin_panel/allmessages.xhtml");
+                  System.out.println("asdasdfgfgrrgregererergregerreg");    
+                       
+            }
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "allmessages";
+    }
+    public String bla() throws IOException
+    {
+        
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.redirect("http://localhost:8080/JavaJSF/index.xhtml");
+        return "index";
+    }
+    public String deleteNote(String id) throws IOException
+    {
+        System.out.println("asdsadd");   
+        try 
+        {
+            //System.out.println(id);
+            Class.forName("com.mysql.jdbc.Driver");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/baza","root", "");
+             FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+            if(connect != null)
+            {
+                statement = connect.createStatement();
+                statement.executeUpdate("delete from messages where idMessage='"+id+"'");
+                connect.close();
+                LoadAllMessages();    
+            }
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "allmessages";
     }
 }

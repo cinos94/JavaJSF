@@ -16,15 +16,15 @@
           <table>
     <tr>
         <th><h:outputText value="#{msg['adminnote']}"/></th>
-        <th><h:form><h:commandLink  action="/admin_panel/Note"  target="" value="#{msg['go']}"/></h:form></th>
+        <th><h:form><h:commandLink  action="Note"  target="" value="#{msg['go']}"/></h:form></th>
     </tr>
     <tr>
         <th><h:outputText value="#{msg['listofusers']}"/></th>
-        <th><h:form><h:commandLink  action="/admin_panel/users"  target="" value="#{msg['go']}"/></h:form></th>
+        <th><h:form><h:commandLink  action="#{users.ShowAll}"  target="" value="#{msg['go']}"/></h:form></th>
     </tr> 
     <tr>
         <th><h:outputText value="#{msg['listofpriv']}"/></th>
-        <th><h:form><h:commandLink  action="/admin_panel/allmessages"  target="" value="#{msg['go']}"/></h:form></th>
+        <th><h:form><h:commandLink  action="#{messages.LoadAllMessages}"  target="" value="#{msg['go']}"/></h:form></th>
     </tr>
 </table>
           <div id="menu">

@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
@@ -40,6 +42,25 @@ public class Users {
     private PreparedStatement preparedStatement = null;
     public ArrayList messages = new ArrayList();
     public String Login;
+    public ArrayList users = new ArrayList();
+    public String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public ArrayList getUsers() {
+        return users;
+    }
+
+    public void setUsers(ArrayList users) {
+        this.users = users;
+    }
+    
 
     public String getLogin() {
         return Login;
@@ -189,6 +210,73 @@ public class Users {
         }
         return "profile";
     }
-    
+public String ShowAll()
+{
+    try 
+        {
+            users.clear();
+            Class.forName("com.mysql.jdbc.Driver");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/baza","root", "");
+             FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+            if(connect != null)
+            {
+                statement = connect.createStatement();
+                Integer id= (Integer)session.getAttribute("id");
+                
+                resultSet = statement.executeQuery("select * from users");
+                
+                while(resultSet.next())
+            {
+                Map m = new HashMap();
+                m.put("idUser",resultSet.getString("idUsers"));
+                m.put("Nickname",resultSet.getString("Nickname"));
+                m.put("Name",resultSet.getString("Name"));
+                m.put("Surname",resultSet.getString("Surname"));
+                users.add(m);
+            }
+                connect.close();
+                
+                //ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+           // ec.redirect("http://localhost:8080/JavaJSF/admin_panel/allmessages.xhtml");
+                  System.out.println("asdasdfgfgrrgregererergregerreg");    
+                       
+            }
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    return "users";
+}
+
+public String DeleteUser(String id)
+{
+    try 
+        {
+            //System.out.println(id);
+            Class.forName("com.mysql.jdbc.Driver");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/baza","root", "");
+             FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+            if(connect != null)
+            {
+                statement = connect.createStatement();
+                statement.executeUpdate("delete from users where idUsers='"+id+"'");
+                connect.close();
+                ShowAll();    
+            }
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    return "users";
+}
+        
     
 }
