@@ -14,7 +14,7 @@
     </h:head>
     <h:body>
         <div class="form">
-       <h:form id='loginf'  onsubmit="return(validate());">
+       <h:form prependId="false" id="loginf"  onsubmit="return(validate())">
             <table border ='0'>
                 <tr>
                     <td>Login:</td>
@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                     <td  colspan='1'></td>
-                    <td align='right'><h:commandButton action="#{login.Validate}" value="Login"></h:commandButton></td>
+                    <td align='right'><h:commandButton type="submit" action="#{login.Validate}" value="Login"></h:commandButton></td>
                 </tr>
                 <tr>
                     <td> <p><h:outputText value="#{login.error}"/></p></td>
@@ -39,11 +39,14 @@
         <script>
                 function validate()
                 {
-                    count = 0;
+                   
+                    var count = 0;
                     
-                if(document.loginf.Login.value === "" || document.loginf.Login.value === null)
-                {   
+                if((document.getElementById("Login").value === "") || (document.getElementById("Login").value === null))
+                { 
+                    
                    document.getElementById("valLogin").innerHTML = "Field required.";
+                   
                    count++;
                 }
                 else
@@ -51,7 +54,7 @@
                     document.getElementById("valLogin").innerHTML = "";
                 }
                 //Password
-                if(document.loginf.Password.value === "" || document.loginf.Password.value === null)
+                if(document.getElementById("Password").value === "" || document.getElementById("Password").value === null)
                 {   
                    document.getElementById("valPassword").innerHTML = "Field required.";
                    count++;
@@ -64,7 +67,7 @@
                 
                 if(count>0) return false;
                 else
-                return true;
+                return false;
                 }
             </script>
         <div id="menu">

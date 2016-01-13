@@ -6,6 +6,7 @@
 
 package beans;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,6 +21,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -37,6 +39,24 @@ public class ShowPosts {
     private ResultSet resultSet = null;
     private PreparedStatement preparedStatement = null;
     public ArrayList posts = new ArrayList();
+    public String sub;
+    public String post;
+
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    public String getSub() {
+        return sub;
+    }
+
+    public void setSub(String sub) {
+        this.sub = sub;
+    }
 
     public void setPosts(ArrayList posts) {
         this.posts = posts;
@@ -51,18 +71,12 @@ public class ShowPosts {
     public ShowPosts() {
     }
     
-    public String LoadPosts(int id)
+    public String LoadPosts() throws IOException
     {
         try 
         {   
-            
             posts.clear();
-            /*FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        if(session.getAttribute("login")==null)
-        {
-            return "login";
-        }*/
+            
             FacesContext facesContext = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
             
@@ -72,10 +86,8 @@ public class ShowPosts {
             if(connect != null)
             {
                 statement = connect.createStatement();
-                Integer sub;
-                sub=id;
                 resultSet = statement.executeQuery("select * from posts p, users u where idTopic='"+ sub +"' AND p.idUsers = u.idUsers");
-                
+                session.setAttribute("sub", sub);
                 while(resultSet.next())
             {
                 Map m = new HashMap();
@@ -86,22 +98,52 @@ public class ShowPosts {
                 m.put("Nickname",resultSet.getString("Nickname"));
                 posts.add(m);
             }
-                
+               return "topic";
             }
     }
         
+            
+        catch (SQLException | ClassNotFoundException ex)
+        {
+            Logger.getLogger(ShowPosts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return "topic";
+    }
+    public String LoadPost()
+            {
+                return "topic";
+            }
+    public String AddPost() throws IOException
+    {
+        try
+        {
+            
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+            Class.forName("com.mysql.jdbc.Driver");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/baza","root", "");
+            if(connect != null)
+            {
+                statement = connect.createStatement();
+                Integer id = (Integer)session.getAttribute("id");
+                sub=(String)session.getAttribute("sub");
+ 
+                    preparedStatement = connect.prepareStatement("insert into posts values (default, ?, ?, ?)");
+                    preparedStatement.setString(1, post);
+                    preparedStatement.setString(2, sub);
+                    preparedStatement.setInt(3, id);
+                    preparedStatement.executeUpdate();
+            }
+            LoadPosts();
+    }
         catch (SQLException ex)
         {
             Logger.getLogger(ShowPosts.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ShowPosts.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "topic";
         
-            return "topic";
     }
-    public String LoadPost()
-            {
-                return "topic";
-            }
-    
 }

@@ -25,7 +25,10 @@
             <td><pre><h:outputText value="#{row.topic}"></h:outputText></pre></td>
         </tr>
 </ui:repeat>
-    
+    <h:panelGroup rendered="#{not empty sessionScope.login}"><h:form><div class="note" >
+              <h:inputText id="input" value="#{showPosts.post}"></h:inputText>
+              <h:commandButton action="#{showPosts.AddPost}" value="Add post"></h:commandButton>
+        </div></h:form></h:panelGroup>
 </table>
         <div id="menu">
             <ui:insert name="menu" >

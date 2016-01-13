@@ -32,7 +32,7 @@ import javax.servlet.http.HttpSession;
  */
 
 @ManagedBean(name="ShowTopics")
-@RequestScoped
+@ApplicationScoped
 public class ShowTopics {
 
       private Connection connect = null;
@@ -40,6 +40,25 @@ public class ShowTopics {
     private ResultSet resultSet = null;
     private PreparedStatement preparedStatement = null;
     public ArrayList topics = new ArrayList();
+    public String topic;
+    public Integer sub;
+
+    public Integer getSub() {
+        return sub;
+    }
+
+    public void setSub(Integer sub) {
+        this.sub = sub;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+    
 
     public void setTopics(ArrayList topics) {
         this.topics = topics;
@@ -63,22 +82,22 @@ public class ShowTopics {
     {
         try 
         {   
-            /*FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        if(session.getAttribute("login")==null)
-        {
-            return "login";
-        }*/
+            
+        
             FacesContext facesContext = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-            
+            if(session.getAttribute("login")==null && id==1)
+        {
+            return "login";
+        }
             
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/baza","root", "");
             if(connect != null)
             {
+                session.setAttribute("cath",id);
                 statement = connect.createStatement();
-                Integer sub;
+               
                 sub=id;
                 resultSet = statement.executeQuery("select * from topics t, users u where idCathegory='"+ sub +"' AND u.idUsers = t.idUsers");
                 
@@ -107,6 +126,32 @@ public class ShowTopics {
     public String showposts(int id)
     {
         return "topic";
+    }
+    public String AddTopic()
+    {
+        try 
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/baza","root", "");
+            statement = connect.createStatement();
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+                sub=(Integer)session.getAttribute("cath");
+                preparedStatement = connect.prepareStatement("insert into  topics values (default, ?, ? , ?)");
+                //topic="asdasd";
+                preparedStatement.setString(1, topic);
+                preparedStatement.setInt(2, sub);
+                preparedStatement.setInt(3, (Integer)session.getAttribute("id"));
+                preparedStatement.executeUpdate();
+                
+            
+        }
+        catch (ClassNotFoundException | SQLException ex) 
+        {
+            Logger.getLogger(ShowTopics.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        LoadTopics(sub);
+        return "cathegory";
     }
     
 }

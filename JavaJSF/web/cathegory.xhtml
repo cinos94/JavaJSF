@@ -19,19 +19,29 @@
                 <tr>
                         <th><h:outputText value="#{msg['topic']}"/></th>
                         <th><h:outputText value="#{msg['nickname']}"/></th>
+                        <th><h:outputText value="id"/></th>
                 </tr>
         </thead>
 <!-- column data -->
 <ui:repeat var="row" value="#{showTopics.topics}">
-    <tr class="mouseover" onclick="#{showPosts.LoadPosts(row.idTopic)}">
+    <tr class="mouseover">
     
-        <h:form><td><h:commandLink action="#{showPosts.LoadPosts(row.idTopic)}" value="#{row.topic}">
+        <h:form><td><h:commandLink action="topic" value="#{row.topic}">
                 <c:param name="id" value="#{row.idTopic}" /></h:commandLink></td></h:form>
         <h:form><td><h:commandLink action="#{showPosts.LoadPosts(row.idTopic)}" value="#{row.Nickname}">
                 <c:param name="id" value="#{row.idTopic}" /></h:commandLink></td></h:form>
+                <td><h:outputText value="#{row.idTopic}">
+                </h:outputText></td>
     </tr>
 </ui:repeat>
-
+<h:panelGroup ><h:form><div class="note" >
+              <h:inputText id="input" value="#{showPosts.sub}"></h:inputText>
+              <h:commandButton action="#{showPosts.LoadPosts}" value="Open"></h:commandButton>
+        </div></h:form></h:panelGroup>
+<h:panelGroup rendered="#{not empty sessionScope.login}"><h:form><div class="note" >
+              <h:inputText id="input" value="#{showTopics.topic}"></h:inputText>
+              <h:commandButton action="#{showTopics.AddTopic}" value="Create"></h:commandButton>
+        </div></h:form></h:panelGroup>
     
 </table>
         <div id="menu">

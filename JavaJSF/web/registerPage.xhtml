@@ -15,7 +15,7 @@
     </h:head>
     <h:body>
         <div class="form">
-       <h:form id='regf' onsubmit="return(validatereg());">
+       <h:form prependId="false" id='regf' onsubmit="return(validatereg());">
             
             <table border ='0'>
                 <tr>
@@ -58,6 +58,7 @@
             <script>
            function validatereg()
            {
+               alert(document.getElementById("Login").value);
                 var count = 0;
                 if(document.regf.Name.value === "" || document.regf.Name.value === null)
                 {   
