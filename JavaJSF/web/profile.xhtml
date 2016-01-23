@@ -37,6 +37,11 @@
                     <td><h:message for="valPassword"></h:message></td>
                 </tr>
                 <tr>
+                    <td><h:outputText value="#{msg['interval']}"/></td>
+                    <td><h:inputText id="interval" value="#{users.interval}"></h:inputText></td>
+                    <td><h:message for="valInterval"></h:message></td>
+                </tr>
+                <tr>
                     <td  colspan='1'></td>
                     <td align='right'><h:commandButton action="#{users.Save}" value="Save"></h:commandButton></td>
                 </tr>

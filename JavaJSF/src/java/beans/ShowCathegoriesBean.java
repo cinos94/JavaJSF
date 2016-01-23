@@ -39,6 +39,15 @@ public class ShowCathegoriesBean {
     private ResultSet resultSet = null;
     private ResultSet resultSet1 = null;
     private PreparedStatement preparedStatement = null;
+    public String cathegory;
+
+    public String getCathegory() {
+        return cathegory;
+    }
+
+    public void setCathegory(String cathegory) {
+        this.cathegory = cathegory;
+    }
     /**
      * Creates a new instance of ShowCathegories
      */
@@ -275,4 +284,48 @@ public String SaveNote() throws IOException
         }
     return "/JavaJSF/index";
 }
+public String create()
+{
+    try 
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/baza","root", "");
+            statement = connect.createStatement();
+            
+            resultSet = statement.executeQuery("select * from cathegories WHERE Content = '"+cathegory+"'");
+            if(resultSet.first() == true)
+            {
+                error="That cathegory already exists!";
+                return "index";
+            }
+            else
+            {
+                preparedStatement = connect.prepareStatement("insert into  cathegories values (default, ?)");
+                System.out.print(cathegory);
+                preparedStatement.setString(1, cathegory);
+                preparedStatement.executeUpdate();
+                
+                Loadlist();
+                error="Successfully created!";
+                return "index";
+            }
+        }
+        catch (ClassNotFoundException | SQLException ex) 
+        {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    return "index";
+}
+
+public String skin="style2.css";
+
+    public String getSkin() {
+        return skin;
+    }
+
+    public void setSkin(String skin) {
+        this.skin = skin;
+    }
+
+
 }

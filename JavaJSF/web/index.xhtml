@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <h:head>
         <title>asdasd</title>
-        <h:outputStylesheet library="css" name="style.css"/>
+        <h:outputStylesheet library="css" name="#{ShowCathegoriesBean.skin}"/>
         
             <ui:insert name="menu" >
               <ui:include src="/menus/header.xhtml" />
@@ -36,8 +36,13 @@
                 <c:param name="id" value="#{row.idCathegory}" /></h:commandLink></td></h:form>
     </tr>
 </ui:repeat>
+
     
 </table>
+        <h:panelGroup rendered="#{sessionScope.login == 'admin'}"><h:form><div class="note" >
+              <h:inputText id="input" value="#{ShowCathegoriesBean.cathegory}"></h:inputText>
+              <h:commandButton action="#{ShowCathegoriesBean.create}" value="Create"></h:commandButton>
+        </div></h:form></h:panelGroup>
         <div id="menu">
             <ui:insert name="menu" >
               <ui:include src="/menus/footer.xhtml" />

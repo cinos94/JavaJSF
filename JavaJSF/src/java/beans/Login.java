@@ -97,9 +97,9 @@ public class Login {
                     if(status)
                     {
                         int id = resultSet.getInt("idUsers");
-                        
+                        int interval = resultSet.getInt("Inter");
                         session.setAttribute("login", user);
-                        session.setMaxInactiveInterval(1800); 
+                        session.setMaxInactiveInterval(interval); 
                         session.setAttribute("id",id);
                         connect.close();
                         return "index";

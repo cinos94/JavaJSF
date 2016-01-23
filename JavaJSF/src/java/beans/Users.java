@@ -99,6 +99,15 @@ public class Users {
     public String message;
     public String error;
     public boolean status;
+    public Integer interval;
+
+    public Integer getInterval() {
+        return interval;
+    }
+
+    public void setInterval(Integer interval) {
+        this.interval = interval;
+    }
 
     public ArrayList getMessages() {
         return messages;
@@ -131,6 +140,7 @@ public class Users {
     public void setStatus(boolean status) {
         this.status = status;
     }
+    
     public Users() {
     }
     
@@ -156,6 +166,7 @@ public class Users {
                         surname = resultSet.getString("Surname");
                         name = resultSet.getString("Name");
                         password = resultSet.getString("password");
+                        interval = resultSet.getInt("Inter");
                         return "profile";
                     }
                     else
@@ -186,14 +197,15 @@ public class Users {
             if(connect != null)
             {
                 statement = connect.createStatement();
-               Integer id= (Integer)session.getAttribute("id");
-               
-                preparedStatement = connect.prepareStatement("UPDATE users SET Nickname=?, Name=?, password=?, Surname=? WHERE idUsers=?");
+               Integer Id= (Integer)session.getAttribute("id");
+               System.out.print(interval);
+                preparedStatement = connect.prepareStatement("UPDATE users SET Nickname=?, Name=?, password=?, Surname=?, Inter=? WHERE idUsers=?");
                 preparedStatement.setString(1, Login);
                 preparedStatement.setString(2, name);
                 preparedStatement.setString(3, password);
                 preparedStatement.setString(4, surname);
-                preparedStatement.setInt(5, id);
+                preparedStatement.setInt(5,interval);
+                preparedStatement.setInt(6, Id);
                 preparedStatement.executeUpdate();
                
                
