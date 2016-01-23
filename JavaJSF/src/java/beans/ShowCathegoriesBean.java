@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,6 +86,9 @@ public class ShowCathegoriesBean {
                 list.add(m);
                 }
             }
+            skin=null;
+            skins.add("style.css");
+            skins.add("style2.css");
             Stats();
     }
         catch (SQLException ex)
@@ -317,7 +321,7 @@ public String create()
     return "index";
 }
 
-public String skin="style2.css";
+public String skin;
 
     public String getSkin() {
         return skin;
@@ -326,6 +330,22 @@ public String skin="style2.css";
     public void setSkin(String skin) {
         this.skin = skin;
     }
+public ArrayList skins = new ArrayList();
 
+    public ArrayList getSkins() {
+        return skins;
+    }
+
+    public void setSkins(ArrayList skins) {
+        this.skins = skins;
+    }
+public void setskin()
+{
+    if(skin=="style2.css")
+    {
+        skin="style.css";
+    }
+    else skin="style2.css";
+}
 
 }
