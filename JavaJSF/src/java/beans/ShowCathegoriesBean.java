@@ -32,7 +32,7 @@ import javax.servlet.http.HttpSession;
  * @author Marcin
  */
 @ManagedBean(name="ShowCathegoriesBean")
-@RequestScoped
+@SessionScoped
 public class ShowCathegoriesBean {
 
     private Connection connect = null;
@@ -89,7 +89,19 @@ public class ShowCathegoriesBean {
             skin=null;
             skins.add("style.css");
             skins.add("style2.css");
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+            Map<String, Object> cookies = facesContext.getExternalContext().getRequestCookieMap();
+            String cookie = cookies.get("style").toString();
+            if(cookie==null)
+            {
+            Cookie cookie2= new Cookie ("style","style.css");
+                cookie2.setMaxAge(60*24);
+                response.addCookie(cookie2);
+            }
             Stats();
+            
+            
     }
         catch (SQLException ex)
         {
@@ -118,6 +130,7 @@ public class ShowCathegoriesBean {
                 Cookie cookie = new Cookie("visited","visited");
                 cookie.setMaxAge(60*24);
                 response.addCookie(cookie);
+                
                 
                 preparedStatement = connect.prepareStatement("select * from stats");   
                 resultSet1 = preparedStatement.executeQuery();

@@ -44,7 +44,7 @@
                 <tr>
                      <h:panelGrid columns="2"> 
                     Skin : 
-                    <h:selectOneMenu value="#{ShowCathegoriesBean.skin}" onchange="submit()" valueChangeListener="#{ShowCathegoriesBean.setskin}">
+                    <h:selectOneMenu id="skin" value="#{cookie['style'].value}" onchange="submit()" valueChangeListener="#{SkinBean.setskin()}">
                     <f:selectItems value="#{ShowCathegoriesBean.skins}" /> 
          </h:selectOneMenu> 
       </h:panelGrid> 
